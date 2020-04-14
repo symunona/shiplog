@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>shiplog</title>
+    <link rel="stylesheet" href="style/shiplog.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
+
+</head>
+
+<body>
+    <div id="app" style="display: none" v-show="true">
+        <nav>
+            <span class="logo">
+                <i v-show="!currentDay" class="fa fa-ship fa-fw"></i>
+                <i v-show="currentDay" v-on:click="currentDay = false" class="fa fa-arrow-left fa-fw clickable"></i>
+            </span>
+            <span v-if="currentDay">
+                <span v-text="currentDayId"></span>
+                -
+            </span>
+            shiplog
+
+            <span class="right-menu" v-on:click="isMenuOpen = !isMenuOpen">
+                <i class="fa fa-bars"></i>
+            </span>
+
+            <span class="loading-top" v-show="loading.length">
+                <i class="fa fa-circle-o-notch fa-spin "></i>
+            </span>
+
+            <div class="sub-menu" v-show="isMenuOpen">
+                <ul>
+                    <li>
+                        <i class="fa fa-bar-chart"></i>
+                        stats
+                    </li>
+                    <li>
+                        <i class="fa fa-user"></i>
+                        profile
+                    </li>
+                    <li>
+                        <i class="fa fa-filter"></i>
+                        export
+                    </li>
+                    <li>
+                        <i class="fa fa-sign-out"></i>
+                        logout
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="content-container">
+            <div id="login" v-show="page == 'login'">
+                <h2>login</h2>
+                <div class="form">
+                    <input type="email" placeholder="email" v-model="credentials.email">
+                    <input type="password" placeholder="password" v-model="credentials.password">
+                    <button v-on:click="login">login</button>
+                    <div>
+                        <a>forgot password</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="register" class="form" v-show="page == 'register'">
+                <h2>register</h2>
+                <div class="form">
+                    <input type="email" placeholder="email">
+                    <input type="password" placeholder="password">
+                    <input type="password" placeholder="password-again">
+                    <button>register</button>
+                </div>
+            </div>
+
+            <div id="day-list" v-show="user && !currentDay">
+                <ul class="menu-list">
+                    <li v-for="(day, id) in data.days" v-on:click="currentDay = day; currentDayId = id"
+                        class="clickable">
+                        {{ id }} <strong>{{ day.title }}</strong> {{day.tags}}
+                    </li>
+                </ul>
+            </div>
+
+            <div id="day-edit" v-if="user && currentDay">
+                <!-- <button v-on:click="currentDay = false"><i class="fa fa-arrow-left"></i></button> -->
+                <div class="form">
+                    <input placeholder="title" v-model="currentDay.title">
+                    <input placeholder="tags" v-model="currentDay.tags">
+                    <textarea placeholder="write about your day" class="my-day"
+                        v-model="currentDay.description"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="node_modules/firebase/firebase-app.js"></script>
+    <script src="node_modules/firebase/firebase-auth.js"></script>
+    <script src="node_modules/firebase/firebase-database.js"></script>
+    <script type="module" src="lib/shiplog.js"></script>
+</body>
+
+</html>

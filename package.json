@@ -1,0 +1,29 @@
+{
+  "name": "shiplog",
+  "version": "0.0.1",
+  "description": "water",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/symunona/shiplog.git"
+  },
+  "keywords": [
+    "journal",
+    "firebase"
+  ],
+  "author": "",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/symunona/shiplog/issues"
+  },
+  "homepage": "https://github.com/symunona/shiplog#readme",
+  "dependencies": {
+    "firebase": "^7.14.0",
+    "font-awesome": "^4.7.0",
+    "moment": "^2.24.0",
+    "vue": "^2.6.11"
+  }
+}
