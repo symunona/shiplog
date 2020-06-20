@@ -17,8 +17,8 @@
                 <i v-show="currentDay" v-on:click="currentDay = false" class="fa fa-arrow-left fa-fw clickable"></i>
             </span>
             <span v-if="currentDay">
-                <span v-text="currentDayId"></span>
-                -
+                <span v-text="currentDay.id"></span>
+                - {{ dayOfWeek }} -
             </span>
             shiplog
 
@@ -52,7 +52,7 @@
             </div>
         </nav>
 
-        <div class="content-container">
+        <div class="content-container" id="scrolling-container">
             <div id="login" v-show="page == 'login'">
                 <h2>login</h2>
                 <div class="form">
@@ -77,20 +77,43 @@
 
             <div id="day-list" v-show="user && !currentDay">
                 <ul class="menu-list">
-                    <li v-for="(day, id) in data.days" v-on:click="currentDay = day; currentDayId = id"
+                    <li v-for="(day, id, index) in dayList" v-on:click="changeTheDay(id)"
+                        v-bind:class="{ today: id == todayId, 'not-in-db': day.empty }" v-bind:id="id"
                         class="clickable">
-                        {{ id }} <strong>{{ day.title }}</strong> {{day.tags}}
+                        {{ index }} {{ id }} <strong>{{ day.title }}</strong> {{day.tags}}
                     </li>
                 </ul>
+                <div class="scroll-buttons">
+                    <button v-on:click="scrollTop" class="top"><i class="fa fa-chevron-up"></i></button>
+                    <button v-on:click="scrollBottom" class="bottom"><i class="fa fa-chevron-down"></i></button>
+                </div>
             </div>
 
             <div id="day-edit" v-if="user && currentDay">
-                <!-- <button v-on:click="currentDay = false"><i class="fa fa-arrow-left"></i></button> -->
                 <div class="form">
                     <input placeholder="title" v-model="currentDay.title">
                     <input placeholder="tags" v-model="currentDay.tags">
                     <textarea placeholder="write about your day" class="my-day"
                         v-model="currentDay.description"></textarea>
+                </div>
+                <div class="footer">
+                    <button v-on:click="goPrevDay"><i class="fa fa-chevron-left"></i></button>
+                    <button v-on:click="goNextDay" class="next"><i class="fa fa-chevron-right"></i></button>
+                </div>
+                <div>
+                    <div v-if="getIndex(prevDayId(currentDay.id)) > -1">
+                        <h2>yesterday</h2>
+                        <p>{{ getIndex(prevDayId(currentDay.id)) }} {{ prevDayId(currentDay.id) }}
+                            <strong>{{ prevDay()?.title }}</strong> {{ prevDay()?.tags }} </p>
+                        <p>{{ prevDay()?.description }}</p>
+                    </div>
+                    <div v-for="(day, id, index) in lastYearList"
+                        class="clickable">
+                        <div>
+                            <p>{{ day.yearAgo }} year{{ (day.yearAgo &gt; 1)?'s':'' }} ago - {{ id }} <strong>{{ day.title }}</strong> {{day.tags}}</p>
+                            <p>{{ day.description }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
