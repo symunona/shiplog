@@ -22,7 +22,7 @@
             </span>
             shiplog
 
-            <span class="right-menu" v-on:click="isMenuOpen = !isMenuOpen">
+            <span class="right-menu" v-on:click="isMenuOpen = !isMenuOpen" v-show="user">
                 <i class="fa fa-bars"></i>
             </span>
 
@@ -32,7 +32,7 @@
 
             <div class="sub-menu" v-show="isMenuOpen">
                 <ul>
-                    <li>
+                    <!-- <li>
                         <i class="fa fa-bar-chart"></i>
                         stats
                     </li>
@@ -43,8 +43,8 @@
                     <li>
                         <i class="fa fa-filter"></i>
                         export
-                    </li>
-                    <li>
+                    </li> -->
+                    <li v-on:click="logout">
                         <i class="fa fa-sign-out"></i>
                         logout
                     </li>
@@ -53,26 +53,53 @@
         </nav>
 
         <div class="content-container" id="scrolling-container">
-            <div id="login" v-show="page == 'login'">
+            <div id="login" v-show="page == 'login'" class="form">
+                <h2> welcome, sailor! <i class="fa fa-compass"></i></h2>
+                <p>
+                    slow down, take a moment, reflect. how did you get here?
+                </p>
+                <p>
+                    as we wander, sometimes it's good to look back, see where we came from. as you type,
+                    new perspectives shall open to show you the way forward. give it a try! log every day!
+                </p>
                 <h2>login</h2>
-                <div class="form">
+                <form>
+                    <p v-show="error"><strong v-text="error"></strong></p>
                     <input type="email" placeholder="email" v-model="credentials.email">
                     <input type="password" placeholder="password" v-model="credentials.password">
                     <button v-on:click="login">login</button>
-                    <div>
-                        <a>forgot password</a>
-                    </div>
-                </div>
+                    <p>
+                        <a v-on:click="page = 'forgot'">forgot password</a>
+                        <a v-on:click="page = 'register'">register</a>
+                    </p>
+                </form>
             </div>
 
             <div id="register" class="form" v-show="page == 'register'">
-                <h2>register</h2>
-                <div class="form">
-                    <input type="email" placeholder="email">
-                    <input type="password" placeholder="password">
-                    <input type="password" placeholder="password-again">
-                    <button>register</button>
-                </div>
+                <h2><i class="fa fa-chevron-left clickable" v-on:click="page = 'login'"></i> register</h2>
+                <p>glad you join the journey! keep the pirates off your way!</p>
+                <form>
+                    <p v-show="error"><strong v-text="error"></strong></p>
+                    <input type="email" placeholder="email" v-model="credentials.email">
+                    <input type="password" placeholder="password" v-model="credentials.password">
+                    <input type="password" placeholder="password-again" v-model="credentials.password_again">
+                    <button v-on:click="register" :disabled="!credentials.email || credentials.password !== credentials.password_again">register</button>
+                </form>
+            </div>
+
+            <div id="forgot" class="form" v-show="page == 'forgot'">
+                <h2><i class="fa fa-chevron-left clickable" v-on:click="page = 'login'"></i> forgot your password?</h2>
+                <p>too much rum maybe? keep those barrels in check!</p>
+                <form>
+                    <input type="email" placeholder="email" v-model="credentials.email">
+                    <button v-on:click="sendPasswordReset" >Reset my Password</button>
+                </form>
+            </div>
+
+            <div id="reset-sent" class="form" v-show="page == 'reset-sent'">
+                <h2>reset sent! <i class="fa fa-envelope"></i></h2>
+                <p>if you had an account with this email, there should be a reset link in your inbox...</p>
+                <a v-on:click="page = 'login'" >try logging in again</a>
             </div>
 
             <div id="day-list" v-show="user && !currentDay">
@@ -83,14 +110,17 @@
                         {{ index }} {{ id }} <strong>{{ day.title }}</strong> {{day.tags}}
                     </li>
                 </ul>
-                <div class="scroll-buttons">
+                <div class="first-day" v-show="firstDayId === todayId">
+                    <p>this is where your days will gather. keep them filled, named, updated!</p>
+                </div>
+                <div class="scroll-buttons" v-show="Object.keys(dayList) > 30">
                     <button v-on:click="scrollTop" class="top"><i class="fa fa-chevron-up"></i></button>
                     <button v-on:click="scrollBottom" class="bottom"><i class="fa fa-chevron-down"></i></button>
                 </div>
             </div>
 
             <div id="day-edit" v-if="user && currentDay">
-                <editor class="form" inline-template
+                <editor inline-template
                     v-bind:day="currentDay"
                     v-bind:day-list="dayList"
                     v-bind:first-day-id="firstDayId"
@@ -107,8 +137,7 @@
                     </div>
                     <div>
                         <div v-if="getIndex(prevDayId(day.id)) > -1">
-                            <h2>yesterday</h2>
-                            <p>{{ getIndex(prevDayId(day.id)) }} {{ prevDayId(day.id) }}
+                            <p>yesterday - {{ getIndex(prevDayId(day.id)) }} {{ prevDayId(day.id) }}
                                 <strong>{{ prevDay()?.title }}</strong> {{ prevDay()?.tags }} </p>
                             <p>{{ prevDay()?.description }}</p>
                         </div>

@@ -40,12 +40,17 @@ nav .logo{ padding-right: 6px }
 .sub-menu li{ padding-left: 10px; cursor: pointer}
 .sub-menu li:hover { background: #999}
 
+/* - forms - */
+.form{ padding: 20px }
 
 /* - day-list - */
 .content-container{
     margin-top: 40px;
     height: calc(100vh - 40px);
     overflow-y: auto;}
+
+    /* First day info in the middle in the list*/
+.first-day{ text-align: center; margin-top: 100px;}
 
 /* - day-edit - */
 
