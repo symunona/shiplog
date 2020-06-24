@@ -33,6 +33,26 @@ nav{ background: #666; display: block;
 }
 nav .logo{ padding-right: 6px }
 
+
+@keyframes swing {
+    0% { transform: rotate(0deg); }
+    33% { transform: rotate(-3deg); }
+    66% { transform: rotate(3deg); }
+    100% { transform: rotate(0deg); }
+ }
+
+.main-logo{ margin: 0 auto; text-align: center; width: 250px; }
+.main-logo i.fa { font-size: 180px; }
+.main-logo:hover i.fa {
+    transform-origin: bottom center;
+    animation: swing 5s infinite ease-in-out alternate;
+}
+
+nav .logo:hover i {
+    transform-origin: bottom center;
+    animation: swing 5s infinite ease-in-out alternate;
+ }
+
 .right-menu{ float: right; margin-right: 10px; cursor: pointer;}
 .loading-top{ float: right; line-height: 40px; margin-right: 10px }
 
@@ -64,3 +84,4 @@ button.next{ float: right; }
 .scroll-buttons button { position: fixed; right: 0px;}
 .scroll-buttons button.top { top: 40px}
 .scroll-buttons button.bottom { bottom: 0px}
+

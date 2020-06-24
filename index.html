@@ -14,7 +14,7 @@
         <nav>
             <span class="logo">
                 <i v-show="!currentDay" class="fa fa-ship fa-fw"></i>
-                <i v-show="currentDay" v-on:click="currentDay = false" class="fa fa-arrow-left fa-fw clickable"></i>
+                <i v-show="currentDay" v-on:click="page = false" class="fa fa-arrow-left fa-fw clickable"></i>
             </span>
             <span v-if="currentDay">
                 <span v-text="currentDay.id"></span>
@@ -73,6 +73,10 @@
                         <a v-on:click="page = 'register'">register</a>
                     </p>
                 </form>
+
+                <div class="main-logo">
+                    <i class="fa fa-ship"></i>
+                </div>
             </div>
 
             <div id="register" class="form" v-show="page == 'register'">
