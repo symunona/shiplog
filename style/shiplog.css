@@ -31,7 +31,7 @@ nav{ background: #666; display: block;
     top: 0px;
     width: calc(100% - 10px)
 }
-nav .logo{ padding-right: 6px }
+nav .logo img{ padding-right: 6px; height: 25px; vertical-align: middle; }
 
 
 @keyframes swing {
@@ -42,13 +42,13 @@ nav .logo{ padding-right: 6px }
  }
 
 .main-logo{ margin: 0 auto; text-align: center; width: 250px; }
-.main-logo i.fa { font-size: 180px; }
-.main-logo:hover i.fa {
+.main-logo img { width: 250px; margin-top: 100px }
+.main-logo:hover img {
     transform-origin: bottom center;
     animation: swing 5s infinite ease-in-out alternate;
 }
 
-nav .logo:hover i {
+nav .logo:hover img {
     transform-origin: bottom center;
     animation: swing 5s infinite ease-in-out alternate;
  }
