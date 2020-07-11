@@ -14,11 +14,11 @@
     <div id="app" style="display: none" v-show="true">
         <nav>
             <span class="logo">
-                <!-- <i v-show="!currentDay" class="fa fa-ship fa-fw"></i> -->
                 <img v-show="!currentDay" src="style/logo.svg">
-                <i v-show="currentDay" v-on:click="page = false" class="fa fa-arrow-left fa-fw clickable"></i>
+                <i v-show="currentDay" v-on:click="back" class="fa fa-chevron-left fa-fw clickable"></i>
             </span>
             <span v-if="currentDay">
+                {{ getIndex(currentDay.id) }}
                 <span v-text="currentDay.id"></span>
                 - {{ dayOfWeek }} -
             </span>

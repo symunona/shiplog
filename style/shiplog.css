@@ -4,10 +4,13 @@ body{
     background: #333; color: #ccc; font-family: Helvetica, sans-serif; padding: 0; margin: 0;
 }
 
-input { height: 28px; line-height: 28px; vertical-align: middle; padding-left: 10px;}
+input {
+    height: 28px; line-height: 28px; vertical-align: middle; padding-left: 10px;
+}
 input, textarea{ background: transparent; border: 1px solid #777; color: #ccc;
     padding: 0; padding-left: 10px;
     font-family: Helvetica, sans-serif;
+    font-size: 16px;
 }
 textarea{ display: block; padding-top: 10px; }
 
@@ -29,7 +32,14 @@ ul.menu-list li{
     border-bottom: 1px solid #777;
     margin: 0; padding-left: 10px;
     overflow: hidden;
+    transition: background-color 2s ease-in-out;
 }
+
+ul.menu-list li.highlight{ 
+    background-color: #999;
+    transition: background-color 1s ease-in-out;
+}
+
 li.today{ background-color:#999 !important; color: black; }
 li.not-in-db { background-color: black}
 /* - nav bar - */
@@ -89,7 +99,13 @@ nav .logo:hover img {
 
 /* - day-edit - */
 
-#day-edit input { width: calc( 50% - 14px )  }
+#day-edit { padding-top: 15px; }
+#day-edit input { width: calc( 50% - 16px ); }
+
+@media only screen and (max-width: 1024px){
+    #day-edit input { width: calc( 100% - 10px )  }
+}
+
 #day-edit textarea.my-day {
     width: calc( 100% - 12px );
     margin-top: 15px;
@@ -107,6 +123,7 @@ button.next{ right: 0; }
 .scroll-buttons button.top { top: 40px}
 .scroll-buttons button.bottom { bottom: 0px}
 
+.history{ padding: 10px }
 .history:hover{ background: #454545 }
 
 #day-edit{ padding-bottom: 50px }
