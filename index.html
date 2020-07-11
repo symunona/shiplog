@@ -6,7 +6,7 @@
     <title>shiplog</title>
     <link rel="stylesheet" href="style/shiplog.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
-
+    <link rel="icon" href="style/logo.svg" type="image/svg">
 </head>
 
 <body>
@@ -135,22 +135,24 @@
                     <div>
                     <input placeholder="title" v-model="day.title">
                     <input placeholder="tags" v-model="day.tags">
-                    <textarea placeholder="write about your day" class="my-day"
+                    <textarea placeholder="write about your day" class="my-day" id="day-description"
                         v-model="day.description"></textarea>
 
                     <div class="footer">
-                        <button v-on:click="goPrevDay"><i class="fa fa-chevron-left"></i></button>
+                        <button v-on:click="goPrevDay" class="prev"><i class="fa fa-chevron-left"></i></button>
                         <button v-on:click="goNextDay" class="next"><i class="fa fa-chevron-right"></i></button>
                     </div>
                     <div>
-                        <div v-if="getIndex(prevDayId(day.id)) > -1">
-                            <p>yesterday - {{ getIndex(prevDayId(day.id)) }} {{ prevDayId(day.id) }}
+                        <div v-if="getIndex(prevDayId(day.id)) > -1" class="history clickable" v-on:click="changeTheDay(prevDayId(day.id))">
+                            <p>yesterday</p>
+                            <p> - {{ getIndex(prevDayId(day.id)) }} {{ prevDayId(day.id) }}
                                 <strong>{{ prevDay()?.title }}</strong> {{ prevDay()?.tags }} </p>
                             <p>{{ prevDay()?.description }}</p>
                         </div>
                         <div v-for="(day, id, index) in lastYearList" class="clickable">
-                            <div>
-                                <p>{{ day.yearAgo }} year{{ (day.yearAgo &gt; 1)?'s':'' }} ago - {{ id }}
+                            <div v-on:click="changeTheDay(id)" class="history">
+                                <p>{{ day.yearAgo }} year{{ (day.yearAgo &gt; 1)?'s':'' }} ago</p>
+                                <p> {{ getIndex(id) }} {{ id }}
                                     <strong>{{ day.title }}</strong> {{day.tags}}</p>
                                 <p>{{ day.description }}</p>
                             </div>
