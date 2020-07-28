@@ -23,6 +23,13 @@
                 - {{ dayOfWeek }} -
             </span>
             shiplog
+            <span v-if="filter.length > 1">
+                - {{filter}}
+            </span>
+
+            <!-- <span class="where-am-i">
+                {{ whereAmI }}
+            </span> -->
 
             <span class="right-menu" v-on:click="isMenuOpen = !isMenuOpen" v-show="user">
                 <i class="fa fa-bars"></i>
@@ -54,7 +61,10 @@
             </div>
         </nav>
 
-        <div class="content-container" id="scrolling-container">
+        <div class="content-container"
+            id="scrolling-container"
+            ref="scrolling-container"
+            v-on:scroll.passive="handleScroll">
             <div id="login" v-show="page == 'login'" class="form">
                 <h2> welcome, sailor! <i class="fa fa-compass"></i></h2>
                 <p>
@@ -112,14 +122,25 @@
 
             <div id="day-list" v-show="user && !currentDay">
                 <ul class="menu-list">
-                    <li v-for="(day, id, index) in dayList" v-on:click="changeTheDay(id)"
-                        v-bind:class="{ today: id == todayId, 'not-in-db': day.empty }" v-bind:id="id"
-                        class="clickable">
-                        {{ index }} {{ id }} <strong>{{ day.title }}</strong> {{day.tags}}
-                    </li>
+                    <template v-for="(day, id, index) in filteredDayList || dayList" >
+                        <li v-if="isDividerVisible(id)" class="divider">
+                            {{ yearMonth(id) }}
+                        </li>
+                        <li v-on:click="changeTheDay(id)"
+                            v-bind:class="{ today: id == todayId, 'not-in-db': day.empty }" v-bind:id="id"
+                            class="clickable">
+                            {{ index }} {{ id }} <strong>{{ day.title }}</strong> {{day.tags}}
+                        </li>
+                    </template>
                 </ul>
                 <div class="first-day" v-show="firstDayId === todayId">
-                    <p>this is where your days will gather. keep them filled, named, updated!</p>
+                    <p>this is where your days will gather. keep them for the future!</p>
+                </div>
+                <div class="search-box">
+                    <i class="fa icon clickable"
+                        v-bind:class="{ 'fa-search': !filter, 'fa-times': filter }"
+                        v-on:click="filter?filter = '':focusInput()"></i>
+                    <input placeholder="lost something to the water, sailor?" v-model="filter" ref="filter">
                 </div>
                 <div class="scroll-buttons" v-show="Object.keys(dayList).length > 30">
                     <button v-on:click="scrollTop" class="top"><i class="fa fa-chevron-up"></i></button>

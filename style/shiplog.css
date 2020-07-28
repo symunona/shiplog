@@ -41,9 +41,13 @@ ul.menu-list li.highlight{
 }
 
 li.today{ background-color:#999 !important; color: black; }
-li.not-in-db { background-color: black}
-/* - nav bar - */
+li.divider{ background-color:#666 !important; color: #aaa; text-align: center }
 
+.where-am-i{ width: calc( 100% - 300px ); text-align: center; display: inline-block; }
+
+li.not-in-db { background-color: black}
+
+/* - nav bar - */
 nav{
     background: #666; display: block;
     height: 40px;
@@ -127,3 +131,6 @@ button.next{ right: 0; }
 .history:hover{ background: #454545 }
 
 #day-edit{ padding-bottom: 50px }
+.search-box { position: relative; }
+.search-box input{ width: calc( 100% - 50px ) ; padding-left: 30px }
+.icon { position: absolute; left: 8px; top: 6px; }
