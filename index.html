@@ -6,7 +6,7 @@
     <title>shiplog</title>
     <link rel="stylesheet" href="style/shiplog.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
-    <link rel="icon" href="style/logo.svg" type="image/svg">
+    <link rel="icon" href="style/logo-4.svg" type="image/svg">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
@@ -14,7 +14,7 @@
     <div id="app" style="display: none" v-show="true">
         <nav>
             <span class="logo">
-                <img v-show="!currentDay" src="style/logo.svg">
+                <img v-show="!currentDay" src="style/logo-4.svg">
                 <i v-show="currentDay" v-on:click="back" class="fa fa-chevron-left fa-fw clickable"></i>
             </span>
             <span v-if="currentDay">
@@ -88,7 +88,7 @@
 
                 <div class="main-logo">
                     <!-- <i class="fa fa-ship"></i> -->
-                    <img src="style/logo.svg">
+                    <img src="style/logo-4.svg">
                 </div>
             </div>
 
@@ -136,7 +136,7 @@
                 <div class="first-day" v-show="firstDayId === todayId">
                     <p>this is where your days will gather. keep them for the future!</p>
                 </div>
-                <div class="search-box">
+                <div class="search-box" v-show="!loading">
                     <i class="fa icon clickable"
                         v-bind:class="{ 'fa-search': !filter, 'fa-times': filter }"
                         v-on:click="filter?filter = '':focusInput()"></i>

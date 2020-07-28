@@ -35,7 +35,7 @@ ul.menu-list li{
     transition: background-color 2s ease-in-out;
 }
 
-ul.menu-list li.highlight{ 
+ul.menu-list li.highlight{
     background-color: #999;
     transition: background-color 1s ease-in-out;
 }
