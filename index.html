@@ -121,30 +121,36 @@
             </div>
 
             <div id="day-list" v-show="user && !currentDay">
-                <ul class="menu-list">
-                    <template v-for="(day, id, index) in filteredDayList || dayList" >
-                        <li v-if="isDividerVisible(id)" class="divider">
-                            {{ yearMonth(id) }}
-                        </li>
-                        <li v-on:click="changeTheDay(id)"
-                            v-bind:class="{ today: id == todayId, 'not-in-db': day.empty }" v-bind:id="id"
-                            class="clickable">
-                            {{ index }} {{ id }} <strong>{{ day.title }}</strong> {{day.tags}}
-                        </li>
-                    </template>
-                </ul>
-                <div class="first-day" v-show="firstDayId === todayId">
-                    <p>this is where your days will gather. keep them for the future!</p>
-                </div>
-                <div class="search-box" v-show="!loading">
-                    <i class="fa icon clickable"
-                        v-bind:class="{ 'fa-search': !filter, 'fa-times': filter }"
-                        v-on:click="filter?filter = '':focusInput()"></i>
-                    <input placeholder="lost something to the water, sailor?" v-model="filter" ref="filter">
-                </div>
-                <div class="scroll-buttons" v-show="dayList && (Object.keys(dayList).length > 30)">
-                    <button v-on:click="scrollTop" class="top"><i class="fa fa-chevron-up"></i></button>
-                    <button v-on:click="scrollBottom" class="bottom"><i class="fa fa-chevron-down"></i></button>
+                <list inline-template
+                    v-bind:change-the-day="changeTheDay"
+                    v-bind:day-list="dayList">
+                    <div>
+                        <ul class="menu-list">
+                            <template v-for="(day, id, index) in filteredDayList || dayList" >
+                                <li v-if="isDividerVisible(id)" class="divider">
+                                    {{ yearMonth(id) }}
+                                </li>
+                                <li v-on:click="changeTheDay(id)"
+                                    v-bind:class="{ today: id == todayId, 'not-in-db': day.empty }" v-bind:id="id"
+                                    class="clickable">
+                                    {{ index }} {{ id }} <strong>{{ day.title }}</strong> {{day.tags}}
+                                </li>
+                            </template>
+                        </ul>
+                        <div class="first-day" v-show="firstDayId === todayId">
+                            <p>this is where your days will gather. keep them for the future!</p>
+                        </div>
+                        <div class="search-box">
+                            <i class="fa icon clickable"
+                                v-bind:class="{ 'fa-search': !filter, 'fa-times': filter }"
+                                v-on:click="filter?filter = '':focusInput()"></i>
+                            <input placeholder="lost something to the water, sailor?" v-model="filter" ref="filter">
+                        </div>
+                    </list>
+                    <div class="scroll-buttons" v-show="dayList && (Object.keys(dayList).length > 30)">
+                        <button v-on:click="scrollTop" class="top"><i class="fa fa-chevron-up"></i></button>
+                        <button v-on:click="scrollBottom" class="bottom"><i class="fa fa-chevron-down"></i></button>
+                    </div>
                 </div>
             </div>
 
@@ -155,10 +161,10 @@
                     v-bind:first-day-id="firstDayId"
                     v-bind:change-the-day="changeTheDay">
                     <div>
-                    <input placeholder="title" v-model="day.title">
-                    <input placeholder="tags" v-model="day.tags">
+                    <input placeholder="title" v-model.lazy.trim="day.title">
+                    <input placeholder="tags" v-model.lazy.trim="day.tags">
                     <textarea placeholder="write about your day" class="my-day" id="day-description"
-                        v-model="day.description"></textarea>
+                        v-model.v-model.lazy="day.description"></textarea>
 
                     <div class="footer">
                         <button v-on:click="goPrevDay" class="prev"><i class="fa fa-chevron-left"></i></button>
