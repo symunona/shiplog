@@ -41,18 +41,18 @@
 
             <div class="sub-menu" v-show="isMenuOpen">
                 <ul>
-                    <!-- <li>
+                    <li v-on:click="page = 'stats'">
                         <i class="fa fa-bar-chart"></i>
                         stats
                     </li>
-                    <li>
+                    <!-- <li>
                         <i class="fa fa-user"></i>
                         profile
-                    </li>
-                    <li>
-                        <i class="fa fa-filter"></i>
-                        export
                     </li> -->
+                    <li v-on:click="page = 'export'">
+                        <i class="fa fa-download"></i>
+                        export
+                    </li>
                     <li v-on:click="logout">
                         <i class="fa fa-sign-out"></i>
                         logout
@@ -120,7 +120,42 @@
                 <a v-on:click="page = 'login'" >try logging in again</a>
             </div>
 
-            <div id="day-list" v-show="user && !currentDay">
+            <div id="export" v-if="page == 'export'" class="form">
+                <export inline-template
+                    v-bind:day-list="dayList"
+                    v-bind:user="user"
+                    >
+<pre>
+{{ user.email }}
+<template v-for="(day, id, index) in dayList" >
+{{ index }} {{ id }} - {{ day.title }}
+{{day.tags}}
+
+{{ day.description }}
+
+
+</template>
+</pre>
+                </export>
+            </div>
+
+            <div id="stats" v-if="page == 'stats'" class="form">
+                <stats inline-template
+                    v-bind:day-list="dayList"
+                    v-bind:user="user"
+                    >
+                    <div>
+                        <div v-for="(tag, id, index) in tagList" >
+                            <div>{{id}} {{ tag.count }}</div>
+                            <div>
+                                <span v-for="day in tag.days"><a v-bind:href="'#' + day">{{ day }}</a> </span>
+                            </div>
+                        </div>
+                    </div>
+                </stats>
+            </div>
+
+            <div id="day-list" v-show="user && !currentDay && !page">
                 <list inline-template
                     v-bind:change-the-day="changeTheDay"
                     v-bind:day-list="dayList">
