@@ -14,8 +14,8 @@
     <div id="app" style="display: none" v-show="true">
         <nav>
             <span class="logo">
-                <img v-show="!currentDay" src="style/logo-4.svg">
-                <i v-show="currentDay" v-on:click="back" class="fa fa-chevron-left fa-fw clickable"></i>
+                <img v-show="!backButtonVisible" src="style/logo-4.svg">
+                <i v-show="backButtonVisible" v-on:click="back" class="fa fa-chevron-left fa-fw clickable"></i>
             </span>
             <span v-if="currentDay">
                 {{ getIndex(currentDay.id) }}
@@ -147,9 +147,22 @@
                     <div>
                         <div v-for="(tag, id, index) in tagList" >
                             <div>{{id}} {{ tag.count }}</div>
-                            <div>
-                                <span v-for="day in tag.days"><a v-bind:href="'#' + day">{{ day }}</a> </span>
+                            <div v-for="interval in tag.intervals">
+                                <div v-if="interval.start !== interval.end">
+                                    <a v-bind:href="'#' + interval.start">{{interval.start}}</a> -
+                                    <a v-bind:href="'#' + interval.end">{{interval.end}}</a>
+                                    ( {{interval.diff}} )
+                                </div>
+                                <div v-if="interval.start === interval.end">
+                                    <a v-bind:href="'#' + interval.start">{{interval.start}}</a>
+                                </div>
                             </div>
+                            <span v-if="!tag.intervals.length">
+                                <a v-bind:href="'#' + tag.days[0]">{{tag.days[0]}}</a>
+                            </span>
+                            <!-- <div>
+                                <span v-for="day in tag.days"><a v-bind:href="'#' + day">{{ day }}</a> </span>
+                            </div> -->
                         </div>
                     </div>
                 </stats>
@@ -166,7 +179,7 @@
                                     {{ yearMonth(id) }}
                                 </li>
                                 <li v-on:click="changeTheDay(id)"
-                                    v-bind:class="{ today: id == todayId, 'not-in-db': day.empty }" v-bind:id="id"
+                                    v-bind:class="{ today: id == todayId, 'not-in-db': isEmpty(day) }" v-bind:id="id"
                                     class="clickable">
                                     {{ index }} {{ id }} <strong>{{ day.title }}</strong> {{day.tags}}
                                 </li>
