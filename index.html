@@ -207,7 +207,9 @@
                     v-bind:day="currentDay"
                     v-bind:day-list="dayList"
                     v-bind:first-day-id="firstDayId"
-                    v-bind:change-the-day="changeTheDay">
+                    v-bind:change-the-day="changeTheDay"
+                    v-bind:save-the-day="saveTheDay"
+                    >
                     <div>
                     <input placeholder="title" v-model.lazy.trim="day.title">
                     <input placeholder="tags" v-model.lazy.trim="day.tags">
