@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>shiplog</title>
-    <link rel="stylesheet" href="style/shiplog.css">
+    <link rel="stylesheet" href="style/shiplog-console.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css">
     <link rel="icon" href="style/logo-4.svg" type="image/svg">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,7 +15,7 @@
         <nav>
             <span class="logo">
                 <img v-show="!backButtonVisible" src="style/logo-4.svg">
-                <i v-show="backButtonVisible" v-on:click="back" class="fa fa-chevron-left fa-fw clickable"></i>
+                <i v-show="backButtonVisible" v-on:click="back" class="clickable">&lt;</i>
             </span>
             <span v-if="currentDay">
                 {{ getIndex(currentDay.id) }}
@@ -174,14 +174,14 @@
                     v-bind:day-list="dayList">
                     <div>
                         <ul class="menu-list">
-                            <template v-for="(day, id, index) in filteredDayList || dayList" >
+                            <template v-for="(day, id, index) in filteredDayList || dayList">
                                 <li v-if="isDividerVisible(id)" class="divider">
                                     {{ yearMonth(id) }}
                                 </li>
                                 <li v-on:click="changeTheDay(id)"
                                     v-bind:class="{ today: id == todayId, 'not-in-db': isEmpty(day) }" v-bind:id="id"
                                     class="clickable">
-                                    {{ index }} {{ id }} <strong>{{ day.title }}</strong> {{day.tags}}
+                                    <span>{{ index }} {{ id }}</span> <strong>{{ day.title }}</strong> {{day.tags}}
                                 </li>
                             </template>
                         </ul>
@@ -211,33 +211,33 @@
                     v-bind:save-the-day="saveTheDay"
                     >
                     <div>
-                    <input placeholder="title" v-model.lazy.trim="day.title">
-                    <input placeholder="tags" v-model.lazy.trim="day.tags">
-                    <textarea placeholder="write about your day" class="my-day" id="day-description"
-                        v-model.v-model.lazy="day.description"
-                        v-on:keydown="resizeDescription"
-                        ></textarea>
+                        <input placeholder="title" v-model.lazy.trim="day.title">
+                        <input placeholder="tags" v-model.lazy.trim="day.tags">
+                        <textarea placeholder="write about your day" class="my-day" id="day-description"
+                            v-model.v-model.lazy="day.description"
+                            ></textarea>
 
-                    <div class="footer">
-                        <button v-on:click="goPrevDay" class="prev"><i class="fa fa-chevron-left"></i></button>
-                        <button v-on:click="goNextDay" class="next"><i class="fa fa-chevron-right"></i></button>
-                    </div>
-                    <div>
-                        <div v-if="getIndex(prevDayId(day.id)) > -1" class="history clickable" v-on:click="changeTheDay(prevDayId(day.id))">
-                            <p>yesterday</p>
-                            <p>{{ getIndex(prevDayId(day.id)) }} {{ prevDayId(day.id) }}
-                                <strong>{{ prevDay()?.title }}</strong> {{ prevDay()?.tags }} </p>
-                            <p>{{ prevDay()?.description }}</p>
+                        <div class="footer">
+                            <button v-on:click="goPrevDay" class="prev"><i class="">&lt;</i></button>
+                            <button v-on:click="goNextDay" class="next"><i class="">&gt;</i></button>
                         </div>
-                        <div v-for="(day, id, index) in lastYearList" class="clickable">
-                            <div v-on:click="changeTheDay(id)" class="history">
-                                <p>{{ day.yearAgo }} year{{ (day.yearAgo &gt; 1)?'s':'' }} ago</p>
-                                <p> {{ getIndex(id) }} {{ id }}
-                                    <strong>{{ day.title }}</strong> {{day.tags}}</p>
-                                <p>{{ day.description }}</p>
+
+                        <div>
+                            <div v-if="getIndex(prevDayId(day.id)) > -1" class="history clickable" v-on:click="changeTheDay(prevDayId(day.id))">
+                                <p>yesterday</p>
+                                <p>{{ getIndex(prevDayId(day.id)) }} {{ prevDayId(day.id) }}
+                                    <strong>{{ prevDay()?.title }}</strong> {{ prevDay()?.tags }} </p>
+                                <p>{{ prevDay()?.description }}</p>
+                            </div>
+                            <div v-for="(day, id, index) in lastYearList" class="clickable">
+                                <div v-on:click="changeTheDay(id)" class="history">
+                                    <p>{{ day.yearAgo }} year{{ (day.yearAgo &gt; 1)?'s':'' }} ago</p>
+                                    <p> {{ getIndex(id) }} {{ id }}
+                                        <strong>{{ day.title }}</strong> {{day.tags}}</p>
+                                    <p>{{ day.description }}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </editor>
             </div>

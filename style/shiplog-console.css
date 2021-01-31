@@ -1,0 +1,168 @@
+/* - generic - */
+
+body{
+    background: black;
+    color: #aaa;
+    font-family: monospace;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+}
+
+input {
+    height: 3em;
+    line-height: 3em;
+    px;
+    vertical-align: middle;
+    padding-left: 10px;
+}
+input, textarea{
+    background: transparent;
+    border: none;
+    color: #aaa;
+    padding: 0;
+    padding-left: 10px;
+    font-family: Helvetica, sans-serif;
+    font-size: 16px;
+    font-family: monospace;
+}
+input:hover, textarea:hover{ color: #ccc }
+textarea{ display: block; padding-top: 10px; }
+
+button {
+    line-height: 3em;
+    background: 0;
+    color: #999;
+    border: 0;
+    vertical-align: middle;
+    padding: 15px;
+}
+button:active, button:focus, input:focus, textarea:focus {outline: none;}
+
+a{ text-decoration: underline; cursor: pointer; color: #999}
+.clickable{ cursor: pointer }
+
+ul{ padding: 0; margin: 0;}
+ul { list-style-type: none; padding: 0}
+ul.menu-list li{
+    display: block;
+    line-height: 3em;
+    height: 3em;
+    /* border-bottom: 1px solid #777; */
+    margin: 0;
+    padding-left: 10px;
+    overflow: hidden;
+    transition: background-color 2s ease-in-out;
+}
+
+ul.menu-list li.highlight{
+    background-color: #999;
+    transition: background-color 1s ease-in-out;
+}
+
+li.today{ background-color:#999 !important; color: black; }
+li.divider{background-color: #222 !important;color: #777;text-align: center;}
+
+.where-am-i{ width: calc( 100% - 300px ); text-align: center; display: inline-block; }
+
+li.not-in-db > span:first-child{background-color: #000;color: #666;}
+
+/* - nav bar - */
+nav{
+    background: #111;
+    display: block;
+    height: 3em;
+    line-height: 3em;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: default;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+}
+nav .logo { width: 2em; }
+nav .logo img{ padding-right: 5px; height: 25px; vertical-align: middle; }
+
+
+@keyframes swing {
+    0% { transform: rotate(0deg); }
+    33% { transform: rotate(-3deg); }
+    66% { transform: rotate(3deg); }
+    100% { transform: rotate(0deg); }
+ }
+
+.main-logo{ margin: 0 auto; text-align: center; width: 250px; }
+.main-logo img { width: 250px; margin-top: 100px }
+.main-logo:hover img {
+    transform-origin: bottom center;
+    animation: swing 5s infinite ease-in-out alternate;
+}
+
+nav .logo:hover img {
+    transform-origin: bottom center;
+    animation: swing 5s infinite ease-in-out alternate;
+ }
+
+.right-menu{ float: right; margin-right: 30px; cursor: pointer; display: block;}
+.loading-top{ float: right; margin-right: 10px }
+
+.sub-menu{position: absolute;right: 4em;background: #222;width: 150px;}
+.sub-menu li{ padding-left: 10px; cursor: pointer}
+.sub-menu li:hover {background: #444;}
+
+/* - forms - */
+.form{ padding: 20px }
+
+/* - day-list - */
+.content-container{
+    margin-top: 40px;
+    height: calc(100vh - 40px);
+    overflow-y: auto;
+}
+
+    /* First day info in the middle in the list*/
+.first-day{ text-align: center; margin-top: 100px;}
+
+/* - day-edit - */
+
+#day-edit {padding-top: 1em;background: black;}
+#day-edit input { width: calc( 50% - 16px ); }
+
+@media only screen and (max-width: 1024px){
+    #day-edit input { width: calc( 100% - 10px )  }
+}
+
+#day-edit textarea.my-day {
+    width: calc( 100% - 12px );
+    margin-top: 15px;
+    min-height: 300px;
+    height: calc( 100vh - 10em );
+}
+
+.footer{/* position: absolute; */bottom: 0px;}
+button.next, button.prev {
+    padding-left: 25px;
+    padding-right: 25px;
+    position: absolute;
+    bottom: 0px;
+    cursor: pointer;
+}
+
+button:hover{ color: #ccc; }
+
+button.next{ right: 0; }
+.scroll-buttons button { position: fixed; right: 0px;}
+.scroll-buttons button.top {top: 3em;font-size: 16px;}
+.scroll-buttons button.bottom { bottom: 0px}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #222; }
+
+.history{ padding: 10px }
+.history:hover{ background: #454545 }
+
+#day-edit{ padding-bottom: 50px }
+.search-box { position: relative; }
+.search-box input{ width: calc( 100% - 50px ) ; padding-left: 30px }
+.icon {position: absolute;left: 8px;top: 14px;}
